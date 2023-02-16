@@ -7,7 +7,11 @@
 
     <!-- Main -->
     <template #resume>
-      <resume-home />
+      <resume-home 
+        :label="'Ahorro total'"
+        :totalAmount="100000"
+        :amount="amount"
+      />
     </template>
 
     <!-- Movements -->
@@ -33,6 +37,11 @@
       ResumeHome,
       MovementsHome,
     },
+    data() {
+      return {
+        amount: null,
+      }
+    }
   };
 
 </script>

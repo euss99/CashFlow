@@ -3,22 +3,25 @@
         <h2 class="title">Historial</h2>
         <div class="content">
             <Movement 
-                v-for="movement in movements" 
-                :key="movement.id"
-                :title="movement.title"
+                v-for="{id, title, description, amount} in movements" 
+                :key="id"
+                :id="id"
+                :title="title"
+                :description="description"
+                :amount="amount"
+                @remove="remove"
             />
         </div>
     </div>
 </template>
 
 <script setup>
-
-    import { toRefs, defineProps } from 'vue';
-    // toRefs es una función que nos permite convertir un objeto en un objeto de refs.
+    import { defineProps } from 'vue';
     // defineProps es una función que nos permite definir las propiedades que va a recibir el componente.
-    import Movement from './Movement.vue';
 
-    const props = defineProps({
+    import Movement from './Movement.vue';
+    
+    defineProps({
         // Aquí definimos las propiedades que va a recibir el componente.
         // En este caso, el componente va a recibir un array de objetos con la información de los movimientos.
         movements: {
@@ -28,8 +31,10 @@
         },
     });
 
-    // Aquí se desestructura el objeto que devuelve la función toRefs, esto nos permite acceder a las propiedades del objeto como si fueran refs.
-    const { movements } = toRefs(props);
+    // Función de remove
+    const remove = (id) => {
+        console.log("remove", id);
+    }
 </script>
 
 

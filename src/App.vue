@@ -22,7 +22,7 @@
             HomePage: defineAsyncComponent(() => {
                 return new Promise((resolve) => {
                     setTimeout(() => {
-                        resolve(import("./components/HomePage.vue"));
+                        resolve(import("./components/Home.vue"));
                     }, 3000);
                 });
             }), // defineAsyncComponent recibe una función que retorna una promesa que resuelve el componente que queremos cargar.

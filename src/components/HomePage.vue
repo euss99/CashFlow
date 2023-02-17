@@ -9,9 +9,19 @@
     <template #resume>
       <resume-home 
         :label="'Ahorro total'"
-        :totalAmount="100000"
+        :totalAmount="1000"
         :amount="amount"
-      />
+        :date="date"
+      >
+        <!-- Graphic -->
+        <template #graphic>
+          Graphic
+        </template>
+        <!-- Action -->
+        <template #action>
+          Acción
+        </template>
+      </resume-home>
     </template>
 
     <!-- Movements -->
@@ -40,6 +50,7 @@
     data() {
       return {
         amount: null,
+        date: null,
       }
     }
   };

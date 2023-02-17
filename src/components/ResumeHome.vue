@@ -1,11 +1,26 @@
 <template>
     <main>
-        <p>{{ label }}</p>
-        <h1>{{ amountVisual }}</h1>
+        <p>{{ labelVisual }}</p>
+        <h1>{{ amountCurrency }}</h1>
+        <div class="graphic">
+            <slot name="graphic"></slot>
+        </div>
+        <div class="action">
+            <slot name="action"></slot>
+        </div>
     </main>
 </template>
 
 <script>
+    // import GraphicHome from '@/components/GraphicHome.vue';
+    // import ButtonHome from '@/components/ButtonHome.vue';
+
+    // NumberFormat es una API de JavaScript que nos permite formatear números de acuerdo a un idioma y una moneda.
+    const currencyFormatter = new Intl.NumberFormat('es-MX', {
+        style: 'currency',
+        currency: 'MXN',
+    });
+
     /* Option API */
     export default {
         props: {
@@ -18,13 +33,23 @@
             amount: {
                 type: Number,
                 default: null,
+            },
+            date: {
+                type: String,
+                default: "Fecha",
             }
         },
         computed: {
             amountVisual() {
                 return this.amount !== null ? this.amount : this.totalAmount;
+            },
+            amountCurrency() {
+                return currencyFormatter.format(this.amountVisual);
+            },
+            labelVisual() {
+                return this.date !== null ? this.date : this.label;
             }
-        }
+        },
     }
 </script>
 

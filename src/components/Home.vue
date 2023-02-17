@@ -19,7 +19,7 @@
         </template>
         <!-- Action -->
         <template #action>
-          Acción
+          <action />
         </template>
       </resume-home>
     </template>
@@ -39,6 +39,7 @@
   import LayoutHome from '@/components/LayoutHome.vue';
   import HeaderHome from '@/components/Header/Header.vue';
   import ResumeHome from '@/components/Resume/Resume.vue';
+  import Action from '@/components/Resume/Action.vue';
   import MovementsHome from '@/components/Movements/Movements.vue';
 
   export default {
@@ -47,6 +48,7 @@
       LayoutHome,
       HeaderHome,
       ResumeHome,
+      Action,
       MovementsHome,
     },
     data() {

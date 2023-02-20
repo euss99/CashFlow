@@ -1,6 +1,12 @@
 <template>
     <div>
-        <svg viewBox="0 0 300 200" >
+        <!-- Los eventos: touchstart, touchmove y touchend se utilizan para detectar el desplazamiento del dedo sobre la pantalla. -->
+        <svg 
+            @touchstart="tap"
+            @touchmove="tap"
+            @touchend="untap"
+            viewBox="0 0 300 200" 
+        >
             <!-- Línea central -->
             <line 
                 stroke="#c4c4c4"
@@ -16,9 +22,10 @@
             />
             <!-- Línea cursor -->
             <line 
+                v-show="showPointer"
                 stroke="#04b500"
                 stroke-width="2"
-                x1="200" y1="0" x2="200" y2="200"
+                :x1="pointer" y1="0" :x2="pointer" :y2="200"
             />
         </svg>
         <p>Últimos 30 días.</p>
@@ -26,7 +33,7 @@
 </template>
 
 <script setup>
-    import { defineProps, toRefs, computed } from 'vue';
+    import { defineProps, toRefs, computed, ref } from 'vue';
 
     const props = defineProps({
         amounts: {
@@ -66,6 +73,27 @@
             return `${points} ${x} ${y}`; // Concatenando los puntos.
         }, "0,100");
     });
+
+    const showPointer = ref(false); // Variable que indica si se muestra el puntero.
+    const pointer = ref(0); // Variable que indica la posición del puntero.
+
+    /* ==== Función que se ejecuta cuando se toca la pantalla ==== */
+    const tap = ({target, touches}) => {
+        // target = elemento que se está tocando.
+        // touches = array con los puntos de toque.
+        showPointer.value = true; // Mostrando el puntero.
+        const elementWidth = target.getBoundingClientRect().width; // Ancho del elemento.
+        const elementX = target.getBoundingClientRect().x; // Posición en el eje x del elemento.
+        const touchX = touches[0].clientX; // Posición en el eje x del toque.
+        
+        pointer.value = ((touchX - elementX) * 300)/ elementWidth; // Posición en el eje x del puntero.
+
+    }
+
+    /* ==== Función que se ejecuta cuando se deja de tocar la pantalla ==== */
+    const untap = ({target, touches}) => {
+        showPointer.value = false; // Ocultando el puntero.
+    }
 </script>
 
 <style scoped>

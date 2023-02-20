@@ -1,9 +1,19 @@
 <template>
     <button @click="showModal = true">Agregar movimiento</button>
-    <teleport>
+    <teleport to="#app">
         <!-- Se usa el teleport para poder agregar el modal al momento del click -->
+        <modal v-show="showModal" @close="showModal = false">
+            Aquí va el formulario dentro del modal slot
+        </modal>
     </teleport>
 </template>
+
+<script setup>
+    import Modal from "./Modal.vue";
+
+    import { ref } from "vue";
+    const showModal = ref(false); // Se usa ref para poder cambiar el valor de la variable showModal, que por defecto es false ya que no se ha hecho click en el botón.
+</script>
 
 <style scoped>
     button {
@@ -15,6 +25,7 @@
         padding: 24px 60px;
         border-radius: 60px;
         box-sizing: border-box;
+        cursor: pointer;
     }
 
     form {

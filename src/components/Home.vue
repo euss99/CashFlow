@@ -15,7 +15,7 @@
       >
         <!-- Graphic -->
         <template #graphic>
-          Graphic
+          <graphic />
         </template>
         <!-- Action -->
         <template #action>
@@ -39,6 +39,7 @@
   import LayoutHome from '@/components/LayoutHome.vue';
   import HeaderHome from '@/components/Header/Header.vue';
   import ResumeHome from '@/components/Resume/Resume.vue';
+  import Graphic from './Resume/Graphic.vue';
   import Action from '@/components/Resume/Action.vue';
   import MovementsHome from '@/components/Movements/Movements.vue';
 
@@ -48,6 +49,7 @@
       LayoutHome,
       HeaderHome,
       ResumeHome,
+      Graphic,
       Action,
       MovementsHome,
     },

@@ -12,7 +12,7 @@
                 fill="none"
                 stroke="#0689B0"
                 stroke-width="2"
-                points="0,0 100,100 200,100 300,200"
+                :points="points"
             />
             <!-- Línea cursor -->
             <line 
@@ -24,6 +24,42 @@
         <p>Últimos 30 días.</p>
     </div>
 </template>
+
+<script setup>
+    import { defineProps, toRefs, computed } from 'vue';
+
+    const props = defineProps({
+        amounts: {
+            type: Array,
+            default: () => [], // Función que retorna un array vacío por defecto.
+        },
+    });
+
+    // Haciendo que la propiedad amounts sea reactiva.
+    const { amounts } = toRefs(props);
+
+    const amountToPixels = (amount) => {
+        const minX = Math.min(...amounts.value); // Valor mínimo del array.
+        const maxX = Math.max(...amounts.value); // Valor máximo del array.
+
+        return `${minX} ${maxX}`;
+    }
+
+    const points = computed(() => {
+        const total = amounts.value.length; // Cantidad de elementos en el array.
+
+        // Retornando los puntos para la línea.
+        return Array(total).fill(100).reduce((points, amount, index)=> {
+            // points = puntos anteriores.
+            // amount = cantidad de puntos en el eje y.
+            // index = índice del elemento en el array.
+            const x = (300 / total) * (index + 1); // Cantidad de puntos en el eje x.
+            const y = amountToPixels(amount); // Cantidad de puntos en el eje y.
+            console.log(y);
+            return `${points} ${x} ${y}`; // Concatenando los puntos.
+        }, "0,100");
+    });
+</script>
 
 <style scoped>
     svg {

@@ -15,7 +15,9 @@
       >
         <!-- Graphic -->
         <template #graphic>
-          <graphic />
+          <graphic 
+            :amounts="amounts"
+          />
         </template>
         <!-- Action -->
         <template #action>
@@ -56,6 +58,7 @@
     data() {
       return {
         amount: null,
+        amounts: [100,200,500,200,-400,-600,0,300,500],
         date: null,
         movements: [
           {

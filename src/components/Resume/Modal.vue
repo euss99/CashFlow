@@ -2,7 +2,7 @@
     <div class="modal">
         <div class="head">
             <p>Nuevo movimiento</p>
-            <img @click="close" src="@/assets/close-icon.svg" alt="Trash Icon">
+            <img @click="close" src="@/assets/close-icon.svg" alt="Close Icon">
         </div>
         <div class="body">
             <slot></slot>

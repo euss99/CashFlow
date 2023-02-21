@@ -36,17 +36,28 @@
 
 <script setup>
     import Modal from "./Modal.vue";
-    import currencyFormatter from "@/javascript/currencyFormater";
 
-    import { ref } from "vue";
+    import { ref, defineEmits } from "vue";
     const showModal = ref(false); // Se usa ref para poder cambiar el valor de la variable showModal, que por defecto es false ya que no se ha hecho click en el botón.
     const title = ref(""); // Se usa ref para poder cambiar el valor de la variable title, que por defecto es "" ya que no se ha escrito nada en el input.
     const amount = ref(0); // Se usa ref para poder cambiar el valor de la variable amount, que por defecto es 0 ya que no se ha escrito nada en el input.
     const description = ref(""); // Se usa ref para poder cambiar el valor de la variable description, que por defecto es "" ya que no se ha escrito nada en el input.
     const movementType = ref("Ingreso"); // Se usa ref para poder cambiar el valor de la variable movementType, que por defecto es "Ingreso" ya que es el valor que se le asigna al input.
 
+    const emit = defineEmits(["create"]); // Se usa defineEmits para poder emitir un evento llamado "create" que se va a usar en el componente padre.
+
+    // Se crea la función submit que se va a ejecutar cuando se haga click en el botón "Agregar movimiento". 
     const submit = () => {
-        showModal.value = false; // Se cambia el valor de la variable showModal a false para que se cierre el modal.
+        showModal.value = false; // Se cambia el valor de showModal a false para que se cierre el modal.
+        emit("create", {
+            // Se emite el evento "create" con los datos del formulario.
+            title: title.value,
+            description: description.value,
+            amount: movementType.value === "Ingreso" ? amount.value : -amount.value, // Se usa un ternario para que si el tipo de movimiento es "Ingreso" se le asigne el valor de amount, y si es "Gasto" se le asigne el valor de amount pero con un signo negativo.
+            time: new Date(), // Se usa new Date() para que se le asigne la fecha y hora actual.
+            id: new Date().getTime(), // Se usa new Date().getTime() para que se le asigne un id único.
+        });
+
     }
 </script>
 

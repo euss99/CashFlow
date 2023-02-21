@@ -16,7 +16,7 @@
 </template>
 
 <script setup>
-    import { defineProps } from 'vue';
+    import { defineProps, defineEmits } from 'vue';
     // defineProps es una función que nos permite definir las propiedades que va a recibir el componente.
 
     import Movement from './Movement.vue';
@@ -31,9 +31,11 @@
         },
     });
 
+    const emit = defineEmits(["remove"]); // Se usa defineEmits para poder emitir un evento llamado "remove" que se va a usar en el componente padre.
+
     // Función de remove
     const remove = (id) => {
-        console.log("remove", id);
+        emit("remove", id);
     }
 </script>
 

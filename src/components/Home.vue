@@ -21,7 +21,7 @@
         </template>
         <!-- Action -->
         <template #action>
-          <action />
+          <action @create="create" />
         </template>
       </resume-home>
     </template>
@@ -30,6 +30,7 @@
     <template #movements>
       <movements-home
         :movements="movements"
+        @remove="remove"
       />
     </template>
 
@@ -59,67 +60,12 @@
       return {
         amount: null,
         date: null,
-        movements: [
-          {
-            id: 1,
-            title: "Movimiento",
-            description: "Deposito de salario",
-            amount: 100,
-            time: new Date("02-21-2023"),
-          },
-          {
-            id: 2,
-            title: "Movimiento 1",
-            description: "Deposito de honorarios",
-            amount: 200,
-            time: new Date("02-18-2023"),
-          },
-          {
-            id: 3,
-            title: "Movimiento 3",
-            description: "Comida",
-            amount: 500,
-            time: new Date("02-15-2023"),
-          },
-          {
-            id: 4,
-            title: "Movimiento 4",
-            description: "Colegiatura",
-            amount: 200,
-            time: new Date("02-14-2023"),
-          },
-          {
-            id: 5,
-            title: "Movimiento 5",
-            description: "Reparación equipo",
-            amount: -400,
-            time: new Date("02-06-2023"),
-          },
-          {
-            id: 6,
-            title: "Movimiento 6",
-            description: "Reparación equipo",
-            amount: -600,
-            time: new Date("02-02-2023"),
-          },
-          {
-            id: 7,
-            title: "Movimiento 7",
-            description: "Reparación equipo",
-            amount: -300,
-            time: new Date("01-25-2023"),
-          },
-          {
-            id: 8,
-            title: "Movimiento 8",
-            description: "Reparación equipo",
-            amount: 500,
-            time: new Date("01-24-2023"),
-          },
-        ],
+        movements: [],
       }
     },
+    // computed es un objeto que contiene funciones que se ejecutan cada vez que se actualiza el DOM.
     computed: {
+      // amounts es un arreglo que contiene los montos de los movimientos de los últimos 30 días.
       amounts() {
         const last30days = this.movements
           .filter(movement => {
@@ -135,6 +81,18 @@
 
           return lastMovements.reduce((acc, movement) => acc + movement, 0); // Suma los movimientos anteriores al movimiento actual.
         })
+      },
+    },
+    // methods es un objeto que contiene funciones que se ejecutan cuando se llama a la función.
+    methods: {
+      // create es una función que crea un nuevo movimiento.
+      create(movement) {
+        this.movements.push(movement);
+      },
+      // remove es una función que elimina un movimiento.
+      remove(id) {
+        const index = this.movements.findIndex(movement => movement.id === id); // Obtiene el índice del movimiento a eliminar.
+        this.movements.splice(index, 1); // Elimina el movimiento.
       },
     },
   };

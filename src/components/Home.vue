@@ -9,7 +9,7 @@
     <template #resume>
       <resume-home 
         :label="'Ahorro total'"
-        :totalAmount="1000"
+        :totalAmount="totalAmount"
         :amount="amount"
         :date="date"
       >
@@ -82,18 +82,42 @@
           return lastMovements.reduce((acc, movement) => acc + movement, 0); // Suma los movimientos anteriores al movimiento actual.
         })
       },
+      // totalAmount es el total de los movimientos.
+      totalAmount() {
+        return this.movements.reduce((acc, movement) => acc + movement.amount, 0);
+      },
+    },
+    // mounted es una función que se ejecuta cuando se carga el componente.
+    mounted() {
+      const movements = JSON.parse(localStorage.getItem("movements")); // Obtiene los movimientos del localStorage en formato JSON.
+
+      // Verifica que los movimientos sean un arreglo.
+      if (Array.isArray(movements)) { 
+        this.movements = movements?.map(
+        movement => {
+          return {
+            ...movement,
+            time: new Date(movement.time).getTime(), // Convierte la fecha en formato string a formato timestamp.
+          }
+        }
+      ); // Asigna los movimientos al arreglo de movimientos.
+      }
     },
     // methods es un objeto que contiene funciones que se ejecutan cuando se llama a la función.
     methods: {
       // create es una función que crea un nuevo movimiento.
       create(movement) {
-        this.movements.push(movement);
+        this.movements.push(movement); // Agrega el movimiento al arreglo de movimientos.
+        this.save();
       },
       // remove es una función que elimina un movimiento.
       remove(id) {
         const index = this.movements.findIndex(movement => movement.id === id); // Obtiene el índice del movimiento a eliminar.
         this.movements.splice(index, 1); // Elimina el movimiento.
       },
+      save() {
+        localStorage.setItem("movements", JSON.stringify(this.movements)); // Guarda los movimientos en el localStorage en formato JSON.
+      }
     },
   };
 

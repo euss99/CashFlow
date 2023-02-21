@@ -57,7 +57,10 @@
             time: new Date(), // Se usa new Date() para que se le asigne la fecha y hora actual.
             id: new Date().getTime(), // Se usa new Date().getTime() para que se le asigne un id único.
         });
-
+        title.value = ""; // Se cambia el valor de title a "" para que se limpie el input.
+        amount.value = 0;
+        description.value = "";
+        movementType.value = "Ingreso";
     }
 </script>
 

@@ -33,7 +33,7 @@
 </template>
 
 <script setup>
-    import { defineProps, toRefs, computed, ref } from 'vue';
+    import { defineProps, toRefs, computed, ref, defineEmits } from 'vue';
 
     const props = defineProps({
         amounts: {
@@ -77,6 +77,8 @@
     const showPointer = ref(false); // Variable que indica si se muestra el puntero.
     const pointer = ref(0); // Variable que indica la posición del puntero.
 
+    const emit = defineEmits(['select']); // Función que permite emitir eventos.
+
     /* ==== Función que se ejecuta cuando se toca la pantalla ==== */
     const tap = ({target, touches}) => {
         // target = elemento que se está tocando.
@@ -88,6 +90,7 @@
         
         pointer.value = ((touchX - elementX) * 300)/ elementWidth; // Posición en el eje x del puntero.
 
+        emit('select', pointer.value); // Emitiendo el evento select.
     }
 
     /* ==== Función que se ejecuta cuando se deja de tocar la pantalla ==== */

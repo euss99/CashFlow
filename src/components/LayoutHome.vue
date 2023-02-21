@@ -70,4 +70,12 @@
     background-color: #e5e5e5;
     border-radius: 4px;
     }
+
+    @media (min-width: 768px) {
+        .movements {
+            width: 80%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    }
 </style>

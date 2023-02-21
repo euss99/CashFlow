@@ -33,7 +33,7 @@
 </template>
 
 <script setup>
-    import { defineProps, toRefs, computed, ref, defineEmits } from 'vue';
+    import { defineProps, toRefs, computed, ref, watch, defineEmits } from 'vue';
 
     const props = defineProps({
         amounts: {
@@ -59,7 +59,6 @@
         return amountToPixels(0);
     }); // Función que retorna la cantidad del eje y donde se encuentra la línea central en cero.
 
-    /* ==== Función de unión de puntos ==== */
     const points = computed(() => {
         const total = amounts.value.length; // Cantidad de elementos en el array.
 
@@ -70,14 +69,22 @@
             // index = índice del elemento en el array.
             const x = (300 / total) * (index + 1); // Cantidad de puntos en el eje x.
             const y = amountToPixels(amount); // Cantidad de puntos en el eje y.
-            return `${points} ${x} ${y}`; // Concatenando los puntos.
-        }, "0,100");
+            return `${points} ${x}, ${y}`; // Concatenando los puntos.
+        }, `0, ${amountToPixels(amounts.value.length ? amounts.value[0] : 0)}`); // Concatenando el punto inicial.
     });
 
     const showPointer = ref(false); // Variable que indica si se muestra el puntero.
     const pointer = ref(0); // Variable que indica la posición del puntero.
 
     const emit = defineEmits(['select']); // Función que permite emitir eventos.
+
+    /* ==== Función que se ejecuta cuando cambia el valor de la variable pointer ==== */
+    watch(pointer, (value) => {
+        const index = Math.ceil((value / (300 / amounts.value.length)));
+        console.log(index);
+        if (index < 0 || index > amounts.value.length) return;
+        emit("select", amounts.value[index - 1], index);
+    });
 
     /* ==== Función que se ejecuta cuando se toca la pantalla ==== */
     const tap = ({target, touches}) => {
@@ -89,8 +96,6 @@
         const touchX = touches[0].clientX; // Posición en el eje x del toque.
         
         pointer.value = ((touchX - elementX) * 300)/ elementWidth; // Posición en el eje x del puntero.
-
-        emit('select', pointer.value); // Emitiendo el evento select.
     }
 
     /* ==== Función que se ejecuta cuando se deja de tocar la pantalla ==== */

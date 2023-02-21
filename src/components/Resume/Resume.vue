@@ -28,7 +28,6 @@
             },
             amount: {
                 type: Number,
-                default: null,
             },
             date: {
                 type: String,

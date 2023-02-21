@@ -9,14 +9,15 @@
     <template #resume>
       <resume-home 
         :label="'Ahorro total'"
+        :date="date"
         :totalAmount="totalAmount"
         :amount="amount"
-        :date="date"
       >
         <!-- Graphic -->
         <template #graphic>
           <graphic 
             :amounts="amounts"
+            @select="select"
           />
         </template>
         <!-- Action -->
@@ -77,7 +78,7 @@
           .map(movement => movement.amount); // Solo regresa los montos de los movimientos.
 
         return last30days.map((movement, i) => {
-          const lastMovements = last30days.slice(0, i); // Obtiene los movimientos anteriores al movimiento actual.
+          const lastMovements = last30days.slice(0, i + 1); // Obtiene los movimientos anteriores al movimiento actual.
 
           return lastMovements.reduce((acc, movement) => acc + movement, 0); // Suma los movimientos anteriores al movimiento actual.
         })
@@ -117,7 +118,12 @@
       },
       save() {
         localStorage.setItem("movements", JSON.stringify(this.movements)); // Guarda los movimientos en el localStorage en formato JSON.
-      }
+      },
+      // select es una función que selecciona un movimiento.
+      select(el) {
+      console.log(el);
+      this.amount = el;
+    }
     },
   };
 

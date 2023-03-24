@@ -31,7 +31,7 @@ Para instalar y ejecutar la aplicación localmente, sigue estos pasos:
 Si deseas contribuir a la aplicación, sigue estos pasos:
 
 1. Haz un fork del repositorio de Cashflow desde GitHub.
-2. Crea una nueva rama con tu cambio con git checkout -b mi-rama.
+2. Crea una nueva rama con tu cambio con `git checkout -b mi-rama`.
 3. Haz tus cambios y realiza un commit con un mensaje descriptivo.
 4. Envía un pull request a la rama main del repositorio original.
 

@@ -42,5 +42,3 @@ Cashflow est√° bajo la licencia MIT. Puedes consultar el archivo LICENSE para m√
 ## Contacto
 
 Si tienes preguntas o comentarios sobre Cashflow, puedes contactarme `euss99@hotmail.com`.
-
-[Entra a darle un vistazo!!](https://cashflow-urielsolis.netlify.app/)
